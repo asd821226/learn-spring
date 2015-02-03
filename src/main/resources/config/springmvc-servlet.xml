@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+				http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.2.xsd">
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<!-- 激活Spring注解方式：自动扫描，并注入Controller. -->
+	<context:component-scan base-package="com.warningrc"
+		use-default-filters="false" scoped-proxy="targetClass">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	<mvc:default-servlet-handler />
+	<bean
+		id="org.springframework.http.converter.BufferedImageHttpMessageConverter"
+		class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+	<bean id="org.springframework.http.converter.StringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+		<constructor-arg value="UTF-8" />
+		<property name="supportedMediaTypes">
+			<list>
+				<bean class="org.springframework.http.MediaType">
+					<constructor-arg index="0" value="*" />
+					<constructor-arg index="1" value="*" />
+					<constructor-arg index="2" value="UTF-8" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="jsonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
+		p:objectMapper-ref="jsonObjectMapper">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+				<!-- IE浏览器下，如果响应Content-Type为application/json，会将json数据作为文件下载，使用Content-Type:text/plain解决该问题 
+					当请求头中accept为text/plain时，依然返回json数据 -->
+				<value>text/plain</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="jsonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	<mvc:annotation-driven>
+		<!-- 设置数据转换器 start -->
+		<mvc:message-converters register-defaults="false">
+			<ref bean="jsonHttpMessageConverter" />
+		</mvc:message-converters>
+		<!-- 设置数据转换器 stop -->
+	</mvc:annotation-driven>
+	<import resource="classpath*:config/springmvc-servlet-*.xml" />
+	
+	
+	<bean
+		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
+		p:suffix=".vm" p:cache="true" />
+	<bean id="velocityConfigurer"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="/WEB-INF/vm/" />
+	</bean>
+</beans>

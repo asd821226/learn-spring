@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	<!-- 属性配置 -->
+	<bean id="config"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean"
+		p:locations="classpath*:config/prop/*.properties" />
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		scope="singleton" p:properties-ref="config" />
+
+	<!-- 扫描spring组件 -->
+	<context:component-scan base-package="com.warningrc"
+		name-generator="org.springframework.context.annotation.AnnotationBeanNameGenerator"
+		scoped-proxy="interfaces">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	<!-- 扫描Aspectj注解 -->
+	<aop:aspectj-autoproxy />
+	<!-- 添加task任务扫描注解支持 -->
+	<task:annotation-driven />
+	<import resource="classpath*:config/application-*.xml" />
+</beans>

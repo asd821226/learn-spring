@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="false">
+	<!-- 输出到控制台 -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p %d{yyyy-MM-dd HH:mm:ss:SSS} %C{1}[%L] - %m%n" />
+		</layout>
+		<!--限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMax" value="ERROR" />
+			<param name="levelMin" value="TRACE" />
+		</filter>
+	</appender>
+	<!-- 输出到文件 -->
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="./log/framework.log" />
+		<param name="append" value="true" />
+		<param name="datePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p %d{yyyy-MM-dd HH:mm:ss:SSS} - %m%n" />
+		</layout>
+	</appender>
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+</log4j:configuration>
