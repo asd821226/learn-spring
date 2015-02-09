@@ -1,4 +1,4 @@
-package com.warningrc.test.learnspring.beans.factory;
+package com.warningrc.test.learnspring.module.beans.factory;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

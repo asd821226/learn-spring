@@ -1,4 +1,4 @@
-package com.warningrc.test.learnspring.springcache.user.entity;
+package com.warningrc.test.learnspring.module.springcache.user.entity;
 
 import java.io.Serializable;
 

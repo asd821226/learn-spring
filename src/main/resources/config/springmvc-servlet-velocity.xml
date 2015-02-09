@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 	<bean
 		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
-		p:suffix=".vm" p:cache="true" />
+		p:suffix=".vm" p:cache="false" />
 	<bean id="velocityConfigurer"
 		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="resourceLoaderPath" value="/WEB-INF/vm/" />

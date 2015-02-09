@@ -1,7 +1,8 @@
-package com.warningrc.test.learnspring.springcache.user.dao;
+package com.warningrc.test.learnspring.module.springcache.user.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +11,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.warningrc.test.learnspring.springcache.user.entity.User;
+import com.warningrc.test.learnspring.module.springcache.user.entity.User;
 
 /**
  * The Class UserDaoImpl.
@@ -38,14 +40,29 @@ public class UserDaoImpl implements UserDao {
                     @Override
                     public User extractData(ResultSet rs) throws SQLException, DataAccessException {
                         if (rs.next()) {
-                            User user = new User();
-                            user.setUserId(rs.getLong(1));
-                            user.setUserName(rs.getString(2));
-                            user.setUserAge(rs.getInt(3));
-                            return user;
+                            return getUserFromResultSet(rs);
                         }
                         return null;
                     }
                 });
+    }
+
+    @Override
+    @Cacheable(value = "defaultCache")
+    public List<User> getAllUser() {
+        logger.info("get All User  from databases.");
+        return jdbcTemplate.query("SELECT user_id , user_name , user_age FROM w_user ", new RowMapper<User>() {
+            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return getUserFromResultSet(rs);
+            }
+        });
+    }
+
+    private static User getUserFromResultSet(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserId(rs.getLong("user_id"));
+        user.setUserName(rs.getString("user_name"));
+        user.setUserAge(rs.getInt("user_age"));
+        return user;
     }
 }

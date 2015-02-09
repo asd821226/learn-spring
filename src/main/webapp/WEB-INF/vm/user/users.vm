@@ -1,0 +1,1 @@
+[#set($userCount = ${allUser.size()})#foreach( $user in $allUser)#parse("user/user.vm")#if($velocityCount < $userCount),#end#end]

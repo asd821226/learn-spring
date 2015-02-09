@@ -1,4 +1,4 @@
-package com.warningrc.test.learnspring.springcache.user.web;
+package com.warningrc.test.learnspring.module.springcache.user.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.warningrc.test.learnspring.springcache.user.entity.User;
-import com.warningrc.test.learnspring.springcache.user.service.UserService;
+import com.warningrc.test.learnspring.module.springcache.user.entity.User;
+import com.warningrc.test.learnspring.module.springcache.user.service.UserService;
 
 /**
  * The Class UserController.
@@ -28,9 +28,9 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @RequestMapping(value = "/user/v/{userId}", method = RequestMethod.GET)
-    public String getUserByIdTitle(@PathVariable("userId") long userId, Model model) {
-        model.addAttribute("user", userService.getUserById(userId));
-        return "user/user";
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String getUserByIdTitle(Model model) {
+        model.addAttribute("allUser", userService.getAllUser());
+        return "user/users";
     }
 }

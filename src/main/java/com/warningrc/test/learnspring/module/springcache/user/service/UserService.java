@@ -1,6 +1,8 @@
-package com.warningrc.test.learnspring.springcache.user.service;
+package com.warningrc.test.learnspring.module.springcache.user.service;
 
-import com.warningrc.test.learnspring.springcache.user.entity.User;
+import java.util.List;
+
+import com.warningrc.test.learnspring.module.springcache.user.entity.User;
 
 /**
  * The Interface UserService.
@@ -17,4 +19,11 @@ public interface UserService {
      * @return the user by id
      */
     User getUserById(long userId);
+
+    /**
+     * Gets the all user.
+     *
+     * @return the all user
+     */
+    List<User> getAllUser();
 }

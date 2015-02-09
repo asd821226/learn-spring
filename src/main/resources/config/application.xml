@@ -16,7 +16,7 @@
 		scope="singleton" p:properties-ref="config" />
 
 	<!-- 扫描spring组件 -->
-	<context:component-scan base-package="com.warningrc"
+	<context:component-scan base-package="com.warningrc.test.learnspring.module"
 		name-generator="org.springframework.context.annotation.AnnotationBeanNameGenerator"
 		scoped-proxy="interfaces">
 		<context:exclude-filter type="annotation"

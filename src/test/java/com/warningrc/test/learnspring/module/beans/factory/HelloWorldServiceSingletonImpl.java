@@ -1,4 +1,4 @@
-package com.warningrc.test.learnspring.beans.factory;
+package com.warningrc.test.learnspring.module.beans.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

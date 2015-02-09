@@ -1,6 +1,8 @@
-package com.warningrc.test.learnspring.springcache.user.dao;
+package com.warningrc.test.learnspring.module.springcache.user.dao;
 
-import com.warningrc.test.learnspring.springcache.user.entity.User;
+import java.util.List;
+
+import com.warningrc.test.learnspring.module.springcache.user.entity.User;
 
 /**
  * The Interface UserDao.
@@ -9,7 +11,7 @@ import com.warningrc.test.learnspring.springcache.user.entity.User;
  * @author <a href="http://blog.warningrc.com">王宁</a><br>
  */
 public interface UserDao {
-    
+
     /**
      * Gets the user by id.
      *
@@ -17,4 +19,12 @@ public interface UserDao {
      * @return the user by id
      */
     User getUserById(long userId);
+
+
+    /**
+     * Gets the all user.
+     *
+     * @return the all user
+     */
+    List<User> getAllUser();
 }
