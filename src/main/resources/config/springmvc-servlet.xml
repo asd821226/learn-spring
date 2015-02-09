@@ -57,13 +57,4 @@
 		<!-- 设置数据转换器 stop -->
 	</mvc:annotation-driven>
 	<import resource="classpath*:config/springmvc-servlet-*.xml" />
-	
-	
-	<bean
-		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
-		p:suffix=".vm" p:cache="true" />
-	<bean id="velocityConfigurer"
-		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-		<property name="resourceLoaderPath" value="/WEB-INF/vm/" />
-	</bean>
 </beans>
