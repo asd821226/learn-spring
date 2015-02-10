@@ -15,9 +15,15 @@
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+	</context-param>
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            classpath:config/application.xml
+            com.warningrc.test.learnspring.config.AppMainConfig
         </param-value>
 	</context-param>
 	<listener>
@@ -27,9 +33,15 @@
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>
+				org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+			</param-value>
+		</init-param>
+		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-                classpath:/config/springmvc-servlet.xml
+                com.warningrc.test.learnspring.config.WebAppMainConfig
             </param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
