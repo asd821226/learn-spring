@@ -7,35 +7,29 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<qualifier value="dataSource" />
 		<property name="targetDataSource">
-			<bean id="dataSource"
-				class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
-				<qualifier value="dataSource" />
-				<property name="targetDataSource">
-					<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-						init-method="init" destroy-method="close">
-						<property name="url" value="${datasource.druid.url}" />
-						<property name="username" value="${datasource.druid.username}" />
-						<property name="password" value="${datasource.druid.password}" />
-						<property name="filters" value="${datasource.druid.filters}" />
-						<property name="maxActive" value="${datasource.druid.maxActive}" />
-						<property name="initialSize" value="${datasource.druid.initialSize}" />
-						<property name="maxWait" value="${datasource.druid.maxWait}" />
-						<property name="minIdle" value="${datasource.druid.minIdle}" />
-						<property name="timeBetweenEvictionRunsMillis"
-							value="${datasource.druid.timeBetweenEvictionRunsMillis}" />
-						<property name="minEvictableIdleTimeMillis"
-							value="${datasource.druid.minEvictableIdleTimeMillis}" />
-						<property name="validationQuery" value="${datasource.druid.validationQuery}" />
-						<property name="testWhileIdle" value="${datasource.druid.testWhileIdle}" />
-						<property name="testOnBorrow" value="${datasource.druid.testOnBorrow}" />
-						<property name="testOnReturn" value="${datasource.druid.testOnReturn}" />
-						<property name="poolPreparedStatements"
-							value="${datasource.druid.poolPreparedStatements}" />
-						<property name="maxOpenPreparedStatements"
-							value="${datasource.druid.maxOpenPreparedStatements}" />
-					</bean>
-				</property>
+			<bean class="com.alibaba.druid.pool.DruidDataSource"
+				init-method="init" destroy-method="close">
+				<property name="url" value="${datasource.druid.url}" />
+				<property name="username" value="${datasource.druid.username}" />
+				<property name="password" value="${datasource.druid.password}" />
+				<property name="filters" value="${datasource.druid.filters}" />
+				<property name="maxActive" value="${datasource.druid.maxActive}" />
+				<property name="initialSize" value="${datasource.druid.initialSize}" />
+				<property name="maxWait" value="${datasource.druid.maxWait}" />
+				<property name="minIdle" value="${datasource.druid.minIdle}" />
+				<property name="timeBetweenEvictionRunsMillis"
+					value="${datasource.druid.timeBetweenEvictionRunsMillis}" />
+				<property name="minEvictableIdleTimeMillis"
+					value="${datasource.druid.minEvictableIdleTimeMillis}" />
+				<property name="validationQuery" value="${datasource.druid.validationQuery}" />
+				<property name="testWhileIdle" value="${datasource.druid.testWhileIdle}" />
+				<property name="testOnBorrow" value="${datasource.druid.testOnBorrow}" />
+				<property name="testOnReturn" value="${datasource.druid.testOnReturn}" />
+				<property name="poolPreparedStatements" value="${datasource.druid.poolPreparedStatements}" />
+				<property name="maxOpenPreparedStatements"
+					value="${datasource.druid.maxOpenPreparedStatements}" />
 			</bean>
 		</property>
 	</bean>
