@@ -27,4 +27,14 @@ public interface UserDao {
      * @return the all user
      */
     List<User> getAllUser();
+
+    /**
+     * Update user.
+     *
+     * @param userId the user id
+     * @param userName the user name
+     * @param userAge the user age
+     * @return the user
+     */
+    User updateUser(long userId, String userName, int userAge);
 }

@@ -26,4 +26,14 @@ public interface UserService {
      * @return the all user
      */
     List<User> getAllUser();
+
+
+    /**
+     * Update user.
+     *
+     * @param userId the user id
+     * @param userName the user name
+     * @param userAge the user age
+     */
+    void updateUser(long userId, String userName, int userAge);
 }

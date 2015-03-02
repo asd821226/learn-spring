@@ -44,11 +44,28 @@
 		<mockito.version>1.9.5</mockito.version>
 		<lombok.version>1.12.6</lombok.version>
 		<junit.version>4.10</junit.version>
+		<jgroups.version>3.6.2.Final</jgroups.version>
 	</properties>
 	<!-- 定义属性信息 -->
 
 	<!-- 配置依赖包 -->
 	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.31</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-jgroupsreplication</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jgroups</groupId>
+			<artifactId>jgroups</artifactId>
+			<version>3.6.2.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>

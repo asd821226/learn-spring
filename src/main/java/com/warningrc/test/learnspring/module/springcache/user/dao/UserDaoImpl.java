@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -64,5 +65,13 @@ public class UserDaoImpl implements UserDao {
         user.setUserName(rs.getString("user_name"));
         user.setUserAge(rs.getInt("user_age"));
         return user;
+    }
+
+    @Override
+    @CachePut(value = "defaultCache", key = "'User.cache:'+#userId")
+    public User updateUser(long userId, String userName, int userAge) {
+        jdbcTemplate.update("UPDATE w_user SET user_name = ? ,user_age = ? WHERE user_id = ?", userName, userAge,
+                userId);
+        return getUserById(userId);
     }
 }

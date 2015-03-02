@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.sf.net/ehcache.xsd">
+	<diskStore path="java.io.tmpdir" />
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="connect=TCP(bind_port=7800):
+        TCPPING(initial_hosts=192.168.22.133[7800],192.168.22.134[7800],192.168.22.136[7800];port_range=2):
+        VERIFY_SUSPECT(timeout=1500):
+        pbcast.NAKACK(use_mcast_xmit=false;retransmit_timeout=3000):
+        pbcast.GMS(join_timeout=5000;print_local_addr=false)"
+		propertySeparator="::" />
+	<defaultCache maxElementsInMemory="10000" eternal="true"
+		overflowToDisk="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120">
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true,
+replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+	</defaultCache>
+	<cache name="defaultCache" maxElementsInMemory="10000" eternal="true"
+		overflowToDisk="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120">
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true,
+replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+	</cache>
+</ehcache>
