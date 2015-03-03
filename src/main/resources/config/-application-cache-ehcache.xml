@@ -6,11 +6,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	<cache:annotation-driven cache-manager="cacheManager" />
 
-	<!-- spring自己的换管理器，这里定义了两个缓存位置名称 ，既注解中的value -->
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager">
 			<bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-				<property name="configLocation" value="classpath:config/ehcache_replication.xml" />
+				<property name="configLocation" value="classpath:config/ehcache/ehcache.xml" />
 			</bean>
 		</property>
 	</bean>
