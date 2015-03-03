@@ -6,6 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	<cache:annotation-driven cache-manager="cacheManager" />
 
+    <!-- 二级缓存配置 -->
 	<bean id="cacheManager"
 		class="com.warningrc.test.learnspring.module.springcache.slc.SlcCacheManager">
 		<constructor-arg index="0">
