@@ -3,6 +3,7 @@ package com.warningrc.test.learnspring.module.springcache.user.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.warningrc.test.learnspring.module.springcache.expiry.CacheExpiry;
 import com.warningrc.test.learnspring.module.springcache.user.entity.User;
 
 /**
@@ -34,6 +36,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Cacheable(value = "defaultCache", key = "'User.cache:'+#userId")
+    @CacheExpiry(value = 5, timeUnit = TimeUnit.SECONDS)
     public User getUserById(long userId) {
         logger.info("get User by Id from databases.");
         return jdbcTemplate.query("SELECT user_id , user_name , user_age FROM w_user WHERE user_id = ? ",
