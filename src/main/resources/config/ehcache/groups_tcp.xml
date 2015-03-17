@@ -1,0 +1,10 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:org:jgroups" xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups.xsd">
+	<TCP bind_port="7800" />
+	<TCPPING
+		initial_hosts="192.168.22.133[7800],192.168.22.134[7800],192.168.22.136[7800]"
+		port_range="1" />
+	<VERIFY_SUSPECT timeout="1500" />
+	<pbcast.NAKACK use_mcast_xmit="false" retransmit_timeout="3000" />
+	<pbcast.GMS join_timeout="5000" print_local_addr="false" />
+</config>

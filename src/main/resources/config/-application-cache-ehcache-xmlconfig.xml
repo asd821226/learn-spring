@@ -4,14 +4,23 @@
 	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-	<cache:annotation-driven cache-manager="cacheManager"
-		mode="proxy" />
-
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager">
 			<bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 				<property name="configLocation" value="classpath:config/ehcache/ehcache.xml" />
 			</bean>
 		</property>
+	</bean>
+	<bean name="annotationCacheOperationSource"
+		class="org.springframework.cache.annotation.AnnotationCacheOperationSource" />
+	<bean name="cacheInterceptor"
+		class="com.warningrc.test.learnspring.module.springcache.expiry.ExpiryCacheInterceptor">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheOperationSources" ref="annotationCacheOperationSource" />
+	</bean>
+	<bean name="org.springframework.cache.config.internalCacheAdvisor"
+		class="org.springframework.cache.interceptor.BeanFactoryCacheOperationSourceAdvisor">
+		<property name="adviceBeanName" value="cacheInterceptor" />
+		<property name="cacheOperationSource" ref="annotationCacheOperationSource" />
 	</bean>
 </beans>

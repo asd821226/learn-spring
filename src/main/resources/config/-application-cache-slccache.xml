@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	<cache:annotation-driven cache-manager="cacheManager" />
+
+    <!-- 二级缓存配置 -->
+	<bean id="cacheManager"
+		class="com.warningrc.test.learnspring.module.springcache.slc.SlcCacheManager">
+		<constructor-arg index="0">
+			<bean class="org.springframework.cache.ehcache.EhCacheCacheManager">
+				<property name="cacheManager">
+					<bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+						<property name="configLocation"
+							value="classpath:config/ehcache/ehcache-replication-groups_file.xml" />
+					</bean>
+				</property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<bean id="cacheManager"
+				class="org.springframework.data.redis.cache.RedisCacheManager">
+				<constructor-arg ref="redisTemplate" />
+				<property name="cacheNames">
+					<list>
+						<value>defaultCache</value>
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+
+
+	<bean id="redis.clients.jedis.JedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal"
+			value="${com.warningrc.test.learnspring.springcache.redis.maxTotal}" />
+		<property name="maxIdle"
+			value="${com.warningrc.test.learnspring.springcache.redis.maxIdle}" />
+		<property name="maxWaitMillis"
+			value="${com.warningrc.test.learnspring.springcache.redis.maxWaitMillis}" />
+		<property name="testOnBorrow"
+			value="${com.warningrc.test.learnspring.springcache.redis.testOnBorrow}" />
+		<property name="lifo"
+			value="${com.warningrc.test.learnspring.springcache.redis.lifo}" />
+		<property name="minEvictableIdleTimeMillis"
+			value="${com.warningrc.test.learnspring.springcache.redis.minEvictableIdleTimeMillis}" />
+		<property name="minIdle"
+			value="${com.warningrc.test.learnspring.springcache.redis.minIdle}" />
+		<property name="numTestsPerEvictionRun"
+			value="${com.warningrc.test.learnspring.springcache.redis.numTestsPerEvictionRun}" />
+		<property name="testOnReturn"
+			value="${com.warningrc.test.learnspring.springcache.redis.testOnReturn}" />
+		<property name="testWhileIdle"
+			value="${com.warningrc.test.learnspring.springcache.redis.testWhileIdle}" />
+		<property name="timeBetweenEvictionRunsMillis"
+			value="${com.warningrc.test.learnspring.springcache.redis.timeBetweenEvictionRunsMillis}" />
+	</bean>
+	<bean id="connectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:host-name="${com.warningrc.test.learnspring.springcache.redis.host}"
+		p:port="${com.warningrc.test.learnspring.springcache.redis.port}"
+		p:password="${com.warningrc.test.learnspring.springcache.redis.password}"
+		p:pool-config-ref="redis.clients.jedis.JedisPoolConfig"
+		p:database="${com.warningrc.test.learnspring.springcache.redis.database}" />
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:keySerializer-ref="stringRedisSerializer" p:connectionFactory-ref="connectionFactory"
+		p:enableTransactionSupport="false" />
+	<bean id="stringRedisSerializer"
+		class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+</beans>

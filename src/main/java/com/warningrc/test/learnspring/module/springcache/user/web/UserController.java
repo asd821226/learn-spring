@@ -33,4 +33,10 @@ public class UserController {
         model.addAttribute("allUser", userService.getAllUser());
         return "user/users";
     }
+
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.POST)
+    public String updateUser(@PathVariable("userId") long userId, User user) {
+        userService.updateUser(userId, user.getUserName(), user.getUserAge());
+        return "redirect:/user/" + userId;
+    }
 }
